@@ -1,25 +1,24 @@
-<! -- dashboard/templates/registration/dashboard.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
 <style>
     label, input { display: block; }
     span.helptext { display: none; }
-    body{
+    body {
         background-image: url('/static/images/dashboard.png');
+        /* Adjust background image properties as needed */
+        background-size: cover; /* Ensure the background image covers the entire container */
+        background-repeat: no-repeat; /* Prevent background image from repeating */
     }
 </style>
-This is the dasboard for registration
-<h2>Admin registration</h2>
-<form method="=post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" name="admin_form">Register as admin</button>
-</form>
-<h2>Farmer registration</h2>
-<form method="=post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" name="farmer_form">Register as farmer</button>
+{% if request.user.is_authenticated %}
+  <p>{{ request.user.username }}</p>
+  <a href="{% url 'logout' %}">login</a>
+{% else %}
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'signup' %}">Signup</a>
+{% endif %}
+
+
+
 {% endblock %}
