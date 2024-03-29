@@ -26,7 +26,7 @@ def user_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('admin-dashboard')
         else:
             # Return form with errors
             return render(request, 'registration/login.html', {'form': form})
@@ -37,3 +37,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def admin_dashboard(request):
+    return render(request, 'admin/admin_dashboard.html')
