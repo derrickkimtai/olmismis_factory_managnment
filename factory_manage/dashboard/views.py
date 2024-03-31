@@ -39,4 +39,5 @@ def user_logout(request):
     return redirect('login')
 
 def admin_dashboard(request):
+    
     return render(request, 'admin/admin_dashboard.html')
