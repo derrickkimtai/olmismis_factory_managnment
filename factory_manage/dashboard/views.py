@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from .forms import SignupForm, LoginForm
+from .forms import SignupForm, LoginForm, FarmerForm
 from django.contrib.auth.models import User
+from farmers.models import Farmer
+
 
 
 def dashboard(request):
@@ -39,5 +41,11 @@ def user_logout(request):
     return redirect('login')
 
 def admin_dashboard(request):
-    
-    return render(request, 'admin/admin_dashboard.html')
+    if request.method == 'POST':
+        form = FarmerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin-dashboard')
+    else:
+        form = FarmerForm()
+    return render(request, 'admin/admin_dashboard.html', {'form': form})

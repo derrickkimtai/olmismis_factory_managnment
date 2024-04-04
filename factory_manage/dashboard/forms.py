@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from farmers.models import Farmer
 
 
 class AdminRegistrationForm(forms.Form):
@@ -19,3 +20,8 @@ class SignupForm(UserCreationForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+class FarmerForm(forms.ModelForm):
+    class Meta:
+        model = Farmer
+        fields = ['name', 'phone', 'address', 'id_number', 'berry_weight']
