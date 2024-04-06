@@ -44,15 +44,18 @@ def admin_dashboard(request):
     if request.method == 'POST':
        form = FarmerWeightForm(request.POST)
        if form.is_valid():
-           farmer = form.cleaned_data.get('Farmer')
-           weight = form.cleaned_data.get('berry_weight')
-           farmer.berry_weight = weight
-           farmer.save()
-           return redirect('admin-dashboard')
+            farmer_name = form.cleaned_data.get('Farmer')
+            berry_weight = form.cleaned_data.get('berry_weight')
+            try:
+                farmer = Farmer.objects.get(name=farmer_name)
+                farmer.berry_weight = berry_weight
+            except Farmer.DoesNotExist:
+                farmer = Farmer(name=farmer_name, berry_weight=berry_weight)
+            farmer.save()
+            return redirect('admin-dashboard')
     else:
         form = FarmerWeightForm()
     return render(request, 'admin/admin_dashboard.html', {'form': form})
-
 def register_new_farmer(request):
     if request.method == 'POST':
         form = FarmerForm(request.POST)
@@ -62,3 +65,7 @@ def register_new_farmer(request):
     else:
         form = FarmerForm()
     return render(request, 'admin/register_farmer.html', {'form': form})
+
+def all_farmers(request):
+    farmers = Farmer.objects.all()
+    return render(request, 'admin/all_farmers.html', {'farmers': farmers})

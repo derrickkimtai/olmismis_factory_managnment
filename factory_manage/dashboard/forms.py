@@ -29,3 +29,9 @@ class FarmerForm(forms.ModelForm):
 class FarmerWeightForm(forms.Form):
     Farmer = forms.CharField(label="Farmer's name", max_length=100)
     berry_weight = forms.FloatField(label="Coffe berries weight (kg)")
+
+    def clean_Farmer(self):
+        farmer_name = self.cleaned_data.get('Farmer')
+        if not Farmer.objects.filter(name=farmer_name).exists():
+            raise forms.ValidationError('Farmer does not exist')
+        return farmer_name
