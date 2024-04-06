@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from .forms import SignupForm, LoginForm, FarmerForm
+from .forms import SignupForm, LoginForm, FarmerForm, FarmerWeightForm
 from django.contrib.auth.models import User
 from farmers.models import Farmer
 
@@ -42,10 +42,23 @@ def user_logout(request):
 
 def admin_dashboard(request):
     if request.method == 'POST':
+       form = FarmerWeightForm(request.POST)
+       if form.is_valid():
+           farmer = form.cleaned_data.get('Farmer')
+           weight = form.cleaned_data.get('berry_weight')
+           farmer.berry_weight = weight
+           farmer.save()
+           return redirect('admin-dashboard')
+    else:
+        form = FarmerWeightForm()
+    return render(request, 'admin/admin_dashboard.html', {'form': form})
+
+def register_new_farmer(request):
+    if request.method == 'POST':
         form = FarmerForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('admin-dashboard')
     else:
         form = FarmerForm()
-    return render(request, 'admin/admin_dashboard.html', {'form': form})
+    return render(request, 'admin/register_farmer.html', {'form': form})
