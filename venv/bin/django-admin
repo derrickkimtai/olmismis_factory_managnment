@@ -1,4 +1,4 @@
-#!/home/kim/olmismis_factory_managnment/olmismis_factory_managnment/venv/bin/python
+#!/home/kim/olmismis_factory_managnment/olmismis_factory_managnment/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
