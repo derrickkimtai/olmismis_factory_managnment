@@ -11,3 +11,7 @@ echo "Running the project..."
  python3 manage.py migrate
 
  kim
+
+
+
+ 
