@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 
-# Build the project
-echo "Building the project..."
-mvn clean install
+set -o errexit
 
-# Run the project
-echo "Running the project..."
- pip install -r requirements.txt
+pip install -r requirements.txt
 
- python3 manage.py migrate
+python manage.py collectstatic --no-input
 
- kim
-
-
-
- 
+python manage.py migrate
