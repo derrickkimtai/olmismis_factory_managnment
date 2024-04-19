@@ -6,6 +6,8 @@ from farmers.models import Farmer
 
 
 
+def land_page(request):
+    return render(request, 'land_page.html')
 def dashboard(request):
     return render(request, 'registration/dashboard.html')
 
