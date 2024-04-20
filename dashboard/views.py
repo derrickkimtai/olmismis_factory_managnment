@@ -3,6 +3,7 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import SignupForm, LoginForm, FarmerForm, FarmerWeightForm
 from django.contrib.auth.models import User
 from farmers.models import Farmer
+from django.core.exceptions import MultipleObjectsReturned
 
 
 
@@ -53,6 +54,12 @@ def admin_dashboard(request):
                 farmer.berry_weight = berry_weight
             except Farmer.DoesNotExist:
                 farmer = Farmer(name=farmer_name, berry_weight=berry_weight)
+            except MultipleObjectsReturned:
+                # If multiple farmers with the same name are found,
+                # handle the situation appropriately, such as logging an error
+                # or selecting one of the farmers to use
+                # For now, let's just log the error
+                print("Multiple farmers with the same name:", farmer_name)
             farmer.save()
             return redirect('admin-dashboard')
     else:
