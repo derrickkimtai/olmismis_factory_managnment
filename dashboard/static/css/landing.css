@@ -1,0 +1,73 @@
+/* landing.css */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/*
+body {
+    background-image: url("/static/landing.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+}
+*/
+
+
+
+.navbar {
+    background-color: #333; /* Set background color for navbar */
+    padding: 10px 0; /* Add padding to navbar */
+}
+
+.navbar ul {
+    list-style-type: none; /* Remove bullet points from navbar */
+    text-align: right; /* Align navbar items to the right */
+}
+
+.navbar ul li {
+    display: inline; /* Display navbar items inline */
+    margin: 0 10px; /* Add margin to navbar items */
+}
+
+.navbar ul li a {
+    color: white; /* Set text color for navbar items */
+    text-decoration: none; /* Remove underline from navbar items */
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+.container {
+    text-align: center; /* Align text to the center */
+    margin-top: 200px; /* Add margin to the top */
+}
+
+.container h1 {
+    font-size: 3em; /* Set font size for heading */
+    color: #12ca40; /* Set text color for heading */
+}
+
+.container p {
+    font-size: 1.5em; /* Set font size for paragraph */
+    color: #333; /* Set text color for paragraph */
+}
+
+.h1 {
+    font-size: 3em; /* Set font size for heading */
+    color: #333; /* Set text color for heading */
+}
+
+.p {
+    font-size: 1.5em; /* Set font size for paragraph */
+    color: #333; /* Set text color for paragraph */
+}
+
+.text-container {
+    background-color: rgba(31, 177, 12, 0.8); /* Set background color for text container */
+    padding: 20px; /* Add padding to text container */
+    border-radius: 10px; /* Add border radius to text container */
+    display: inline-block; /* Display text container inline */
+}

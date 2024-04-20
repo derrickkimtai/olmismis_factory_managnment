@@ -1,18 +1,27 @@
-<h1>welcome to the landing page of olmismis </h1>
-
-<P>explore the features of the facory as you like in this case</P>
-<style>
-    body {
-      background-image: url("/static/landing.png");
-      background-repeat: no-repeat; /* Prevent image tiling */
-      background-position: center; /* Center the image */
-      background-size: cover; /* Stretch image to cover the viewport */
-    }
-    </style>
-
-
-<ul>
-    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Olmismis Farmers Co-operative Society</title>
+    <!-- Link to the CSS file -->
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{% url 'dashboard' %}">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
     
+    <h1>Welcome to the Olmismis Farmers Co-operative Society</h1>
+    <p>Explore the features of the factory as you like in this case</p>
 
-</ul>
+    <!-- Add other sections (About, Services, Contact) below -->
+
+</body>
+</html>
