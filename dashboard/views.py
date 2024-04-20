@@ -62,12 +62,14 @@ def register_new_farmer(request):
     if request.method == 'POST':
         form = FarmerForm(request.POST)
         if form.is_valid():
-            form.save()
+            farmer = form.save(commit=False)
+            farmer_name = form.cleaned_data.get('name')
+            farmer.save()
             return redirect('admin-dashboard')
+        
     else:
-        form = FarmerForm()
+        form = FarmerForm
     return render(request, 'admin/register_farmer.html', {'form': form})
-
 def all_farmers(request):
     farmers = Farmer.objects.all()
     return render(request, 'admin/all_farmers.html', {'farmers': farmers})
