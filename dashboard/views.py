@@ -4,7 +4,11 @@ from .forms import SignupForm, LoginForm, FarmerForm, FarmerWeightForm
 from django.contrib.auth.models import User
 from farmers.models import Farmer
 from django.core.exceptions import MultipleObjectsReturned
+import logging
+from django.views.generic import TemplateView
+from django.views.decorators.csrf import csrf_protect
 
+logger = logging.getLogger(__name__)
 
 
 def land_page(request):
@@ -22,6 +26,7 @@ def user_signup(request):
         form = SignupForm()
     return render(request, 'registration/signup.html', {'form': form})
 
+@csrf_protect
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -29,16 +34,58 @@ def user_login(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
-            if user is not None:
+            logger.info(f"Username: {username}, Password: {password}, User: {user}")
+            if user:
                 login(request, user)
                 return redirect('admin-dashboard')
-        else:
-            # Return form with errors
-            return render(request, 'registration/login.html', {'form': form})
+            else:
+                logger.error("Authentication failed")
+    else:
+        form = LoginForm()
+    return render(request, 'registration/login.html', {'form': form})
+#def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user:
+                login(request, user)
+                return redirect('admin-dashboard')
     else:
         form = LoginForm()
     return render(request, 'registration/login.html', {'form': form})
         
+#def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+
+            # Attempt to authenticate the user
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                # Check if the user is active (optional, but recommended for security)
+                if user.is_active:
+                    login(request, user)
+                    print("Redirecting to admin dashboard....")
+                    return redirect('admin-dashboard')  # Assuming 'admin-dashboard' is a valid URL pattern
+                else:
+                    # User account is inactive, display appropriate error message
+                    return render(request, 'registration/login.html', {'form': form, 'error_message': 'Your account is inactive. Please contact the administrator.'})
+            else:
+                # Invalid credentials, display appropriate error message
+                return render(request, 'registration/login.html', {'form': form, 'error_message': 'Invalid username or password.'})
+        else:
+            # Form is not valid, return with errors
+            return render(request, 'registration/login.html', {'form': form})
+    else:
+        form = LoginForm()  # Create an empty form for GET requests
+    return render(request, 'registration/login.html', {'form': form})
+
 def user_logout(request):
     logout(request)
     return redirect('login')
